@@ -137,11 +137,6 @@ namespace Day3
         }
       }
 
-      //foreach (Tuple<int, int> location in _map.Keys)
-      //{
-      //  Console.WriteLine(location.Item1 + ", " + location.Item2);
-      //}
-
       Console.WriteLine("Number of houses visited: " + _map.Count);
       Console.ReadKey();
     }
