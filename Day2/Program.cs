@@ -13,6 +13,7 @@ namespace Day2
         {
             string input;
             int totalRequiredPaper = 0;
+            int totalRequiredRibbon = 0;
 
             using (TextReader reader = new StreamReader(@"Input.txt"))
             {
@@ -28,9 +29,11 @@ namespace Day2
                 int width = Int32.Parse(dimensions[1]);
                 int height = Int32.Parse(dimensions[2]);
                 totalRequiredPaper += GetRequiredWrappingPaper(length, width, height);
+                totalRequiredRibbon += GetRequiredRibbon(length, width, height);
             }
 
             Console.WriteLine("Required paper: " + totalRequiredPaper);
+            Console.WriteLine("Required ribbon: " + totalRequiredRibbon);
             Console.ReadKey();
 
         }
@@ -50,21 +53,63 @@ namespace Day2
             int minArea;
             int sideArea = 0;
 
-            minArea = length * width;
+            minArea = CalculateArea(length, width);
 
-            sideArea = width * height;
+            sideArea = CalculateArea(width, height);
             if (sideArea < minArea)
             {
                 minArea = sideArea;
             }
 
-            sideArea = height * length;
+            sideArea = CalculateArea(height, length);
             if (sideArea < minArea)
             {
                 minArea = sideArea;
             }
 
             return minArea;
+        }
+
+        static int GetRequiredRibbon(int length, int width, int height)
+        {
+          return GetSmallestPerimeter(length, width, height) + GetBow(length, width, height);
+        }
+
+        static int GetSmallestPerimeter(int length, int width, int height)
+        {
+          int minPerimeter;
+          int sidePerimeter = 0;
+
+          minPerimeter = CalculatePerimeter(length, width);
+
+          sidePerimeter = CalculatePerimeter(width, height);
+          if (sidePerimeter < minPerimeter)
+          {
+            minPerimeter = sidePerimeter;
+          }
+
+          sidePerimeter =CalculatePerimeter(height, length);
+          if (sidePerimeter < minPerimeter)
+          {
+            minPerimeter = sidePerimeter;
+          }
+
+          return minPerimeter;
+        }
+
+        static int GetBow(int length, int width, int height)
+        {
+          return length * width * height;
+        }
+
+        private static int CalculateArea(int x, int y)
+        {
+          return x * y;
+        }
+
+        static int CalculatePerimeter(int x, int y)
+        {
+          return (2 * x) + (2 * y);
         }
     }
 }
